@@ -7,33 +7,20 @@ use Illuminate\Http\Request;
 
 class DoctorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //Lista de doctores
     public function index()
-    {
-        $doctors = Doctor::all();
+    {           
+        $doctors = Doctor::all(); //Para ordenar los doctores por orden alfabético
         return view('hospital.doctor.indexDoctors', compact('doctors'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //Crear doctores
     public function create()
     {
         return view('hospital.doctor.createDoctor');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    //Almacenar doctor
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -57,38 +44,25 @@ class DoctorController extends Controller
         $doctor->especialidad = $request->input('especialidad');
         $doctor->save();
 
-        return redirect('/doctor');
+        return redirect('/doctor')->with('success', '¡El médico ha sido agregado con éxito!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Doctor  $doctor
-     * @return \Illuminate\Http\Response
-     */
+    //Mostrar información de doctor
     public function show(Doctor $doctor)
     {
-        return view('hospital.doctor.showDoctor', compact('doctor'));
+        return view('hospital.doctor.showDoctor', compact('doctor'))
+                ->with('patients', $doctor->patients)
+                ->with('offices', $doctor->offices)
+                ->with('appointments', $doctor->appointments);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Doctor  $doctor
-     * @return \Illuminate\Http\Response
-     */
+    //Actualizar doctor
     public function edit(Doctor $doctor)
     {
         return view('hospital.doctor.editDoctor', compact('doctor'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Doctor  $doctor
-     * @return \Illuminate\Http\Response
-     */
+    //Método update
     public function update(Request $request, Doctor $doctor)
     {
         $this->validate($request, [
@@ -102,7 +76,6 @@ class DoctorController extends Controller
         ]);
 
         //Editar médico
-        //$doctor = Doctor::find($doctor);    es así para editar?
         $doctor->name = $request->input('name');
         $doctor->birthdate = $request->input('birthdate');
         $doctor->telephoneNumber = $request->input('telephoneNumber');
@@ -115,15 +88,10 @@ class DoctorController extends Controller
         return redirect('/doctor');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Doctor  $doctor
-     * @return \Illuminate\Http\Response
-     */
+    //Eliminar doctor
     public function destroy(Doctor $doctor)
     {
         $doctor->delete();
-        return redirect('/doctor');
+        return redirect('/doctor')->with('success', '¡El médico ha sido eliminado con éxito!');
     }
 }

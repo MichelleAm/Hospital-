@@ -1,32 +1,23 @@
-@extends ('layouts.app')
+@extends ('layouts.nav')
 
 @section('content')
 <div class="container">
-	<div class="jumbotron">
-		<h1 align="center">Lista de médicos</h1> 
-		<p align="center">Aquí se encuentra una lista de todos los médicos del hospital. Puedes utilizar la barra de búsqueda para encontrar un médico en específico.</p> 
+	<div class="jumbotron" align="center">
+		<h1>Lista de médicos</h1> 
 	</div>
-
-
-	<form>
-		<div class="form-group">
-			<label for="busqueda">Buscar</label>
-			<input type="text" class="form-control" id="busqueda" aria-describedby="nota" placeholder="¿A quién buscas?">
-			<small id="nota" class="form-text text-muted">Ingresa el nombre del médico que buscas.</small>
-		</div>
-		<button type="submit" class="btn btn-primary">Buscar</button>
-	</form>
 </div>
 <br>
 
 <div class="form-group" align="center">
-<a href="/doctor/create" role="button" class="btn btn-success">Agregar</a>
+	<a href="/doctor/create" role="button" class="btn btn-success">Agregar</a>
 </div>
 
 <div class="container">
-	<table class="table table-hover">
+
+	@if(count($doctors) > 0)
+	<table class="table table-hover" id="data_table">
 		<thead>
-			<tr class="table-primary">
+			<tr>
 				<th scope="col">ID</th>
 				<th scope="col">Nombre</th>
 				<th scope="col">Fecha de nacimiento</th>
@@ -52,6 +43,13 @@
 			@endforeach
 		</tbody>
 	</table>
+
+	@else
+	<p>No se encontraron doctores. <a href="/doctor/create">¡Agrega uno!</a></p>
+	@endif
 </div>
 
 @endsection
+
+@include('includes.dataTables')
+

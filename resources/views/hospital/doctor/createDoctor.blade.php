@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.nav')
 
 @section('content')
 
@@ -26,11 +26,11 @@
          </div>
          <div class="form-group">
              {{Form::label('turno', 'Turno:')}}
-             {{Form::text('turno', '', ['class'=>'form-control', 'placeholder' => 'Turno'] )}}
+             {{Form::select('turno', ['Vespertino' => 'Vespertino', 'Matutino' => 'Matutino'])}}
          </div>
          <div class="form-group">
              {{Form::label('sexo', 'Sexo:')}}
-             {{Form::text('sexo', '', ['class'=>'form-control', 'placeholder' => 'Sexo'] )}}
+             {{Form::select('sexo', ['M' => 'M', 'F' => 'F'])}}
          </div>
          <div class="form-group">
              {{Form::label('cedula', 'Cedula:')}}

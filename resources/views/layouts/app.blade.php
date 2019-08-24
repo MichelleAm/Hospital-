@@ -8,10 +8,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>La Salud Es Primero</title>
+    <title>La Salud es lo Primero</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('splash/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <script src="{{ asset('splash/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('splash/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
     <!-- Custom fonts for this template -->
     <link href="{{ asset('splash/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
@@ -26,10 +29,10 @@
 <body>
 <div id="app">
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-md navbar-light bg-light static-top">
+    <nav class="navbar navbar-expand-md navbar-dark bg-info static-top">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
-                La Salud Es Primero
+                La Salud es lo Primero
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                 <span class="navbar-toggler-icon"></span>
@@ -39,9 +42,18 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav mr-auto">
                     @if (Auth::check())   <!-- Si el usuario ha iniciado sesión se mostrará esto: -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ action('DoctorController@index') }}">{{__('Doctores') }}</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ action('DoctorController@index') }}">{{__('Doctores') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ action('PatientController@index') }}">{{__('Pacientes') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ action('OfficeController@index') }}">{{__('Consultorios') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ action('AppointmentController@index') }}">{{__('Citas') }}</a>
+                        </li>
                     @endif
                 </ul>
 
@@ -67,7 +79,7 @@
                             <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                            {{ __('Cerrar sesión') }}
                         </a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -81,11 +93,10 @@
     </div>
 </nav>
 
-<!-- Bootstrap core JavaScript -->
-<script src="{{ asset('splash/vendor/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('splash/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
 
     <main class="py-4">
+        @include('includes.messages')
         @yield('content')
     </main>
 </div>
